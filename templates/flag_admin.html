@@ -1,0 +1,164 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'favicon.png' %}" rel="icon" type="image/png">
+    <title>Flagged</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+            <header>
+                <div class="header_inner">
+                    <div class="right-side lg:pr-4">
+
+                        <!-- profile -->
+
+                        <a href="">
+                            <img src="{{user_profile.profileimg.url}}" class="header-avatar" alt="">
+                        </a>
+                        <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
+                            <ul>
+                                <li><a href="/profile/{{request.user.username}}"> Profile </a> </li>
+                                <li><a href="/settings"> Account setting </a> </li>
+                                {% if user.is_superuser %}
+                                <li><a href="data"> Data</a></li>
+                                {% endif %}
+                                <li><a href="logout"> Log Out</a></li>
+                               
+                            </ul>
+                        </div>
+                </div>
+            </header>
+
+            <div class="container m-auto">
+
+                <!--<h1 class="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-5"> Feed </h1>--->
+
+                <div class="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
+
+                    <!-- left sidebar-->
+                    <div class="space-y-5 flex-shrink-0 lg:w-7/12">
+
+                        <!-- post 1-->
+                        <h1 style="font-size:30px">Flagged Posts</h1>
+                        {% for post in flagged_list_p %}
+                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
+    
+                            <!-- post header-->
+                            <div class="flex justify-between items-center px-4 py-3">
+                                <div class="flex flex-1 items-center space-x-4">
+                                   
+                                    <span class="block font-semibold "><a href="/profile/{{post.user}}">@{{post.user}}</a>
+                                    </span>
+                                    <div class="hidden-content">
+                                        <a class="del_btn" href="/delete/{{post.id}}">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Delete</a>
+                                    </div>  
+                                </div>
+                            
+                            </div>
+    
+                            <div uk-lightbox>
+                                <a href="{{post.image.url}}">  
+                                    <img src="{{post.image.url}}" alt="">
+                                </a>
+                            </div>
+                            
+    
+                            <div class="py-3 px-4 space-y-3"> 
+                               
+                                <div class="flex space-x-4 lg:font-bold">
+                                    <a class="flex items-center space-x-2">
+                                        <div class="p-2 rounded-full text-black">
+                                            
+                                        </div>
+                                        
+                                 
+                                </div>
+                               
+
+                                <p>
+                                    <a href="/profile/{{post.user}}"><strong>{{post.user}}</strong></a> {{post.caption}}
+                                </p>
+
+                                <div style="  display: flex; flex-direction: column;">
+                                    
+                                
+                                </div>
+                                
+                               
+    
+                            </div>
+    
+                        </div>
+                        {% endfor %}
+
+                        <h1 style="font-size:30px">Flagged Comments</h1>
+                        <div style="  display: flex; flex-direction: column;">
+                            <div class ="flex" style="flex-direction:column;">
+
+                                {% for comment in flagged_list_c %}
+                                <div class="w-10 h-10 rounded-full relative flex-shrink-0" style="margin-top: 5px">
+                                    <img src="{{comment.get_profile_img}}" alt="" class="absolute h-full rounded-full w-full">
+                                </div>
+                                </a>
+                                <a class="del_btn" href="/delete_c/{{comment.id}}">Delete</a>
+                                <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20" style ="margin-bottom: 10px;">
+                                    <p class="leading-6">{{comment}}<n>
+                                    </p>
+                                    
+                                    <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
+                    
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        
+                        </div>
+                 
+                        
+
+
+                    </div>
+
+                </div>               
+          
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+ <!-- Scripts
+    ================================================== -->
+    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>  
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/uikit.js' %}"></script>
+    <script src="{% static 'assets/js/simplebar.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+
+
+    
+</body>
+
+
+</html>
